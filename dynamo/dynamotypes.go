@@ -175,6 +175,9 @@ func createAV(val interface{}) *dynamodb.AttributeValue {
 func keyMaker(q *Query, t *Table) map[string]*dynamodb.AttributeValue {
 	keys := make(map[string]*dynamodb.AttributeValue)
 	keys[t.PrimaryKeyName] = createAV(q.PrimaryValue)
+	if t.SortKeyName == "" {
+		return keys
+	}
 	keys[t.SortKeyName] = createAV(q.SortValue)
 	return keys
 }
